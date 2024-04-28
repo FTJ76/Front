@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
+
+    <title>Projeto MVP</title>
+</head>
+
+<body>
+     <!-- Cabeçalho de informações do sistema -->
+    <header>
+    <div class="page-header">
+        <div class="title">
+            <div class="row">
+              <div class="col_left">
+                <h2>Loja "Griffe" </h2>
+              </div>
+              <div class="col_right">
+                <h6><input style="border: none;min-width: 300px;background-color: transparent;color: yellow;" id="username" value="" /></h6>
+              </div>
+            </div>
+        </div>
+        <div class="options">
+            <button onclick="pagina_index()" class="btn">Continuar 🛒</button>
+            <div class="dropdown">
+                <button class="btn">Opções</button>
+                <div class="dropdown-content">
+                  <a id="link_login" style="display: block;" onclick="document.getElementById('modal_login').style.display='block'" href="#">Login</a>
+                  <a onclick="document.getElementById('modal_registro').style.display='block'" href="#">Registro</a>
+                  <a id="link_pedidos" onclick="pagina_pedidos();" style="display: none;" href="#">Pedidos</a>
+                  <a id="link_sair" onclick="logout();" style="display: none;" href="#">Sair</a>
+                </div>
+            </div>          
+        </div>        
+    </div>
+    <div class="banner">
+            <img src="shopping1.png"
+            alt="y">
+        </div>
+    </header>
+    <br/>
+    <section class="items">
+        <div id='div_aviso' style="z-index: 100;position: fixed;font-weight: bold;background-color: green;color: yellow;"></div>
+    </section>
+    <hr>
+    <section class="items">
+        <div class="container" style="height: 50px;">
+            <div>
+              <label id="lbl_id_pedido" class="ml40 fw ws"></label>
+            </div>
+          </div>      
+    </section>
+    <hr>
+    <!-- Tabela com items existentes -->
+    <div class="row">
+        <div class="col_left">
+          <h2>Meu carrinho</h2>
+          <section class="items">
+                <table class="col80" id="itens_concluido">
+                    <tr>
+                        <th>Código</th>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Valor Total</th>
+                    </tr>
+                </table>
+            </section>
+            <br/>
+            <section class="items">
+                <table class="col80"  id="totais">
+                    <tr>
+                        <td colspan="3">Total:</td>
+                        <td style="text-align: right;" id="total_compra"></td>
+                    </tr>
+                </table>
+            </section>
+            <hr>
+            <h2>Dados Cliente</h2>
+            <section class="items">
+                <div class="container" style="height: 100px;">
+                  <div>
+                    <label class="ml30 h30 w100 fw" for="nome_cliente"><span class="ws fs18">Nome Cliente    </span></label>
+                    <input readonly="readonly" id="nome_cliente" class="h30 w400" type="text" placeholder="Nome Cliente" name="nome_cliente" required>
+                  </div>
+                </div>      
+            </section>
+            <hr>
+            <h2>Pagamento</h2>
+            <section class="items">
+                <div class="container" style="height: 100px;">
+                  <div>
+                    <label class="ml30 h30 w100 fw" for="forma_pagamento"><span class="ws fs18">Forma de Pagamento    </span></label>
+                    <input readonly="readonly" id="forma_pagamento" readonly="readonly" class="h30 w250" type="text" name="forma_pagamento" required>    
+                </div>
+                </div>      
+            </section>
+        </div>
+        <div class="col_right">
+          <h2>Endereço</h2>
+          <div class="container" style="height: 300px;">
+            <div>
+              <label class="ml30 mt30 h30 w100 fw" for="cep">         <span class="ws">CEP                    </span></label>
+              <input readonly="readonly" id="cep" class="mt30 h30 w200" type="text" placeholder="CEP" name="cep" required>
+            </div>
+            <div>
+                <label class="ml30 mt30 h30 w100 fw" for="logradouro"> <span class="ws">Logradouro       </span></label>
+                <input readonly="readonly" id="logradouro" class="mt30 h30 w200" type="text" placeholder="logradouro" name="logradouro" required>    
+            </div>  
+            <div>
+                <label class="ml30 mt30 h30 w100 fw" for="complemento">  <span class="ws">Complemento   </span></label>
+                <input readonly="readonly" id="complemento" class="mt30 h30 w200" type="text" placeholder="Complemento" name="complemento" required>
+            </div>
+            <div>
+                <label class="ml30 mt30 h30 w100 fw" for="bairro">  <span class="ws">Bairro                </span></label>
+                <input readonly="readonly" id="bairro" class="mt30 h30 w200" type="text" placeholder="Bairro" name="bairro" required>
+            </div>
+            <div>
+                <label class="ml30 mt30 h30 w100 fw" for="estado">  <span class="ws">Estado               </span></label>
+                <input readonly="readonly" id="estado" class="mt30 h30 w200" type="text" placeholder="Estado" name="estado" required>
+            </div>
+          </div>
+          <hr class="mt80">
+          <h2>Data/Hora do Pedido</h2>
+          <div class="container" style="height: 100px;">
+            <div>
+              <input readonly="readonly" id="data_insercao" class="ml40 h30 w200" type="text" placeholder="Data de Pedido" name="data_insercao" required>
+            </div>
+          </div>
+        </div>
+    </div>    
+    <br />
+
+    <!--  MODAL-->
+
+    <!-- Modal Login-->
+    <div id="modal_login" class="modal">
+      
+      <!-- Modal Content -->
+      <form class="modal-content animate">
+        <span onclick="document.getElementById('modal_login').style.display='none'" class="close close_format" title="Fecha Modal">&times;</span>
+    
+        <div class="container" style="height: 70px;">
+          <div>
+              <label class="ml30 mt30 h30" for="login_acesso"><b>Usuário</b></label>
+              <input id="login_acesso" class="mt30 h30 w250" type="text" placeholder="Introduza o Usuário" name="login_acesso" required>
+        
+              <label class="ml30 mt30 h30" for="senha_acesso"><b>Senha</b></label>
+              <input id="senha_acesso" class="mt30 h30 w250" type="password" placeholder="Introduza a Senha" name="senha_acesso" required>
+              <button type="button"  class="btn ml30" onclick="login_usuario();">Acessar</button> 
+          </div>  
+        </div>
+    
+        <div class="container" style="height: 60px;background-color:#f1f1f1">
+              <label>
+                  <input class="ml30 mt20" type="checkbox" checked="checked" name="remember"> Lembrar?
+              </label>
+              <span class="psw ml40 mt20"> <a href="#">Esqueceu a senha?</a></span>
+        </div> 
+      </form>
+    </div>
+    <!-- Modal Registro-->
+    <div id="modal_registro" class="modal">
+
+      <!-- Modal Content -->
+      <form class="modal-content animate">
+        <div class="container" style="height: 300px;">
+          <span onclick="document.getElementById('modal_registro').style.display='none'"class="close close_format" title="Fecha Modal">&times;</span>
+          <div>
+            <label class="ml30 mt30 h30 w100 fw" for="nome_registro">   <span class="ws">Nome        </span></label>
+            <input id="nome_registro" class="mt30 h30 w200" type="text" placeholder="Introduza o Nome" name="nome_registro" required>
+          </div>
+          <div>
+              <label class="ml30 mt30 h30 w100 fw" for="login_registro"><span class="ws">Usuário     </span></label>
+              <input id="login_registro" class="mt30 h30 w200" type="text" placeholder="Introduza o Usuário" name="login_registro" required>    
+          </div>  
+          <div>
+              <label class="ml30 mt30 h30 w100 fw" for="senha_registro">  <span class="ws">Senha       </span></label>
+              <input id="senha_registro" class="mt30 h30 w200" type="password" placeholder="Introduza a Senha" name="senha_registro" required>
+          </div>
+          <div class="mt30">
+              <button type="button" class="btn ml150" onclick="registro_usuario();">Cadastrar</button> 
+          </div>  
+        </div>
+
+        <div class="container" style="height: 30px;background-color:#f1f1f1">
+        </div> 
+      </form>
+    </div>
+
+    <script src="codigo.js"></script>
+    <script src="modal_usuario.js"></script>
+    <script src="detalhe_pedido.js"></script>
+</body>
+
+</html>
+
+
